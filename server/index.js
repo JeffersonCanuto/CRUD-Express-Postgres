@@ -1,4 +1,5 @@
 const express = require("express");
+const conn = require("./db/conn");
 require("dotenv").config();
 
 const app = express();
@@ -9,9 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, (error) => {
     if (error) {
-        console.log("Error while attempting to run the server!");
-        return;
+        throw new Error(`Error while attempting to run the server: ${error}`);     
     }
 
     console.log(`Server is running on port ${PORT}!`);
 });
+
+conn();
