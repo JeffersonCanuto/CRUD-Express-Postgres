@@ -10,7 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.listen(PORT, (error) => {
     if (error) {
-        throw new Error(`Error while attempting to run the server: ${error}`);     
+        console.log(`Error while attempting to run the server: ${error}`);
+        return;
     }
 
     console.log(`Server is running on port ${PORT}!`);
