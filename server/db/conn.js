@@ -1,5 +1,5 @@
 const { Sequelize } = require("sequelize");
-const createUserModel = require("../model/userSchema");
+const createUserModel = require("../model/userModel");
 
 const sequelize = new Sequelize("postgres", "postgres", "1234", {
     host: "localhost",
