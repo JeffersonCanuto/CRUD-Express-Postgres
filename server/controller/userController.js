@@ -1,6 +1,19 @@
+const { UserModelData } = require("../db/conn");
+
 class User {
-    getAllEmp(req, res) {
-        res.status(200).send("Helloooww jefsu!");
+    async getAllEmp(req, res) {
+        try {
+            const users = (await UserModelData).findAll();
+
+            if (!users.length) {
+                return res.status(204).json({ error: "Users not found!"});
+            }
+
+            return res.status(200).json(users);
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({ error: "Internal Server Error!"});
+        }
     }
 }
 
