@@ -1,6 +1,6 @@
 const express = require("express");
-const conn = require("./db/conn");
-const routes = require("./routes");
+const { conn } = require("./db/conn");
+const userRoutes = require("./routes/user");
 
 require("dotenv").config();
 
@@ -10,7 +10,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", routes);
+app.use("/", userRoutes);
 
 app.listen(PORT, (error) => {
     if (error) {
@@ -20,5 +20,3 @@ app.listen(PORT, (error) => {
 
     console.log(`Server is running on port ${PORT}!`);
 });
-
-conn();
