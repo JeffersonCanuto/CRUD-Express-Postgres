@@ -20,9 +20,9 @@ class User {
     async addNewUser(req, res) {
         const { userId } = req.body;
         try {
-            const users = await((await UserModelData).findOne({ where: { userId: userId }}));
+            const user = await((await UserModelData).findOne({ where: { userId: userId }}));
 
-            if (users === null) {
+            if (!user) {
                 (await UserModelData).create(req.body);
                 return res.status(201).json({ message: "User created successfully..." })
             }
@@ -46,8 +46,26 @@ class User {
 
             return res.status(200).json({ message: `User with id ${id} updated successfully...` });
         } catch(error) {
-            console.log(`Errow while updating user. Error: ${error}`);
+            console.log(`Error while updating user. Error: ${error}`);
             return res.status(500).json({ message: "Internal Server Error"});
+        }
+    }
+    /* DELETE */
+    async deleteUser(req, res) {
+        const { id } = req.params;
+        
+        try {
+            const user = await((await UserModelData).findOne({ where: { userId: id }}));
+
+            if (!user) {
+                return res.status(404).json({ message: `User with id ${id} cannot be found on the DB...`})
+            }
+
+            user.destroy();
+            return res.status(200).json({ message: `User with id ${id} deleted successfully...` });
+        } catch(error) {
+            console.log(`Error while deleting user. Error: ${error}`);
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     }
 }
