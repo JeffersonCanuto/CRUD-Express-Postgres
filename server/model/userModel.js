@@ -10,24 +10,28 @@ const createUserModel  = async(sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             isLowercase: true,
             unique: true
         },
-        designation: {
+        password: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        empId: {
-            type: DataTypes.STRING,
+        userId: {
+            type: DataTypes.INTEGER,
             allowNull: false,
             unique: true
         }
     });
 
     return User;
-}
+}   
 
 module.exports = createUserModel;
