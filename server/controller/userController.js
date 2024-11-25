@@ -13,7 +13,7 @@ class User {
             return res.status(200).json(users);
         } catch (error) {
             console.log(`Error while fetching all users: ${error}`);
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error" });
         }
     }
     /* CREATE */
@@ -30,7 +30,24 @@ class User {
             return res.status(200).json({ message: "User already exists in DB..."})
         } catch(error) {
             console.log(`Error while adding a new user. Error: ${error}`);
-            return res.status(500).json({ error: "Internal Server Error"});
+            return res.status(500).json({ message: "Internal Server Error"});
+        }
+    }
+    /* UPDATE */
+    async updateUser(req, res) {
+        const { id } = req.params;
+        
+        try {
+            const user = await((await UserModelData).update(req.body, { where: { userId: id }}));
+
+            if (user.shift() === 0) {
+                return res.status(404).json({ message: `User with id ${id} cannot be found on the DB...`});
+            }
+
+            return res.status(200).json({ message: `User with id ${id} updated successfully...` });
+        } catch(error) {
+            console.log(`Errow while updating user. Error: ${error}`);
+            return res.status(500).json({ message: "Internal Server Error"});
         }
     }
 }
